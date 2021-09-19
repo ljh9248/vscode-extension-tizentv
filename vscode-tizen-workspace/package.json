@@ -10,7 +10,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:vscode-tizen-workspace.helloWorld"
+		"onCommand:vscode-tizen-workspace.helloWorld",
+		"onView:taskExplorer"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
