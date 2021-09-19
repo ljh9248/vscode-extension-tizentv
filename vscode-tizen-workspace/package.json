@@ -19,7 +19,31 @@
 				"command": "vscode-tizen-workspace.helloWorld",
 				"title": "Hello World"
 			}
-		]
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "tizen-workspace",
+					"title": "Tizen Workspace",
+					"icon": "media/dep.svg"
+				}
+			]
+		},
+		"views": {
+			"tizen-workspace": [
+				{
+					"id": "taskExplorer",
+					"name": "Task Explorer",
+					"icon": "media/dep.svg",
+					"contextualTitle": "Task Explorer"
+				},
+				{
+					"id": "taskTopper",
+					"name": "Task Topper",
+					"contextualTitle": "Task Maker"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",
