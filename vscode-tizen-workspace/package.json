@@ -63,9 +63,9 @@
 					"contextualTitle": "Task Explorer"
 				},
 				{
-					"id": "taskTopper",
-					"name": "Task Topper",
-					"contextualTitle": "Task Maker"
+					"id": "taskKebabMaker",
+					"name": "Task Kebab Maker",
+					"contextualTitle": "Task Kebab Maker"
 				}
 			]
 		},
