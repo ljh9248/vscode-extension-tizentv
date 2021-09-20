@@ -5,6 +5,8 @@ import {
   ExtensionContext,
   ProviderResult,
   Task,
+  ThemeColor,
+  ThemeIcon,
   TreeDataProvider,
   TreeItem,
   TreeItemCollapsibleState,
@@ -50,20 +52,18 @@ export class KebabProvider
   getTreeItem(element: KebabItem | TaskItem): TreeItem | Thenable<TreeItem> {
     if (element instanceof TaskItem) {
       element.collapsibleState = TreeItemCollapsibleState.Collapsed;
-    }
-
-    if (
-      element.contextValue === PropertyState.mandatory &&
-      element.description === "none"
-    ) {
-      element.iconPath = {
-        dark: this.context.asAbsolutePath(
-          join("resources", "dark", "warning.svg")
-        ),
-        light: this.context.asAbsolutePath(
-          join("resources", "light", "warning.svg")
-        ),
-      };
+    } else if (element.contextValue === PropertyState.mandatory) {
+      if (element.description === "none" || !element.description) {
+        element.iconPath = new ThemeIcon(
+          "error",
+          new ThemeColor("testing.iconErrored")
+        );
+      } else {
+        element.iconPath = new ThemeIcon(
+          "testing-passed-icon",
+          new ThemeColor("testing.iconPassed")
+        );
+      }
     }
     return element;
   }
@@ -85,6 +85,7 @@ export class KebabProvider
   refresh() {
     this._onDidChangeTreeData.fire();
   }
+
   create(task: TaskItem) {
     const kebab = new KebabItem(`kebab-${this.kebabs.length}`);
     kebab.pushTask(task);
