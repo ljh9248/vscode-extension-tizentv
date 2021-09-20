@@ -37,6 +37,18 @@ export function activate(context: ExtensionContext) {
         kebabProvider.refresh();
       }
     ),
+    commands.registerCommand("tizenWorkspace.runTask", (node: TaskItem) => {
+      node.runTask();
+    }),
+    commands.registerCommand("tizenWorkspace.dropTask", (node: TaskItem) => {
+      node.dropTask();
+    }),
+    commands.registerCommand(
+      "tizenWorkspace.openTaskTerminal",
+      (node: TaskItem) => {
+        node.openTerminal();
+      }
+    ),
   ];
 
   context.subscriptions.push(...disposable);

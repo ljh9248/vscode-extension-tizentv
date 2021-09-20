@@ -20,8 +20,8 @@
 				"command": "taskExplorer.runTask",
 				"title": "Tizen : Run Task",
 				"icon": {
-					"dark": "resources/dark/run.svg",
-					"light": "resources/light/run.svg"
+					"dark": "resources/dark/play.svg",
+					"light": "resources/light/play.svg"
 				}
 			},
 			{
@@ -42,10 +42,34 @@
 			},
 			{
 				"command": "tizenWorkspace.editProperty",
-				"title": "Tizen workspace : Edit properties",
+				"title": "Tizen Workspace : Edit properties",
 				"icon": {
-					"dark": "resources/dark/script.svg",
-					"light": "resources/light/script.svg"
+					"dark": "resources/dark/edit.svg",
+					"light": "resources/light/edit.svg"
+				}
+			},
+			{
+				"command": "tizenWorkspace.runTask",
+				"title": "Tizen Workspace : Run task...",
+				"icon": {
+					"dark": "resources/dark/play.svg",
+					"light": "resources/light/play.svg"
+				}
+			},
+			{
+				"command": "tizenWorkspace.dropTask",
+				"title": "Tizen Workspace : Drop task from ...",
+				"icon": {
+					"dark": "resources/dark/trash.svg",
+					"light": "resources/light/trash.svg"
+				}
+			},
+			{
+				"command": "tizenWorkspace.openTaskTerminal",
+				"title": "Tizen Workspace : Open Task Terminal",
+				"icon": {
+					"dark": "resources/dark/terminal.svg",
+					"light": "resources/light/terminal.svg"
 				}
 			}
 		],
@@ -94,6 +118,21 @@
 					"command": "tizenWorkspace.editProperty",
 					"when": "view == taskKebabMaker && viewItem =~ /^mandatory$|^optional$/",
 					"group": "inline"
+				},
+				{
+					"command": "tizenWorkspace.runTask",
+					"when": "view == taskKebabMaker && viewItem== TizenTask",
+					"group": "inline@1"
+				},
+				{
+					"command": "tizenWorkspace.dropTask",
+					"when": "view == taskKebabMaker && viewItem== TizenTask",
+					"group": "inline@2"
+				},
+				{
+					"command": "tizenWorkspace.openTaskTerminal",
+					"when": "view == taskKebabMaker && viewItem== TizenTask",
+					"group": "inline@3"
 				}
 			]
 		},

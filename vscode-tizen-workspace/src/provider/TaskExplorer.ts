@@ -8,6 +8,7 @@ import {
   TreeDataProvider,
   TreeItem,
   TreeItemCollapsibleState,
+  window,
 } from "vscode";
 
 export enum PropertyState {
@@ -44,10 +45,6 @@ export class TaskItem extends TreeItem {
         } else {
           item.contextValue = PropertyState.optional;
         }
-        // item.command = {
-        //   command: "tizenWorkspace.editProperty",
-        //   title: `Set property of the ${key}`,
-        // };
         return item;
       });
     }
@@ -60,6 +57,18 @@ export class TaskItem extends TreeItem {
   output: TreeItem[] = [];
 
   contextValue = "TizenTask";
+
+  runTask() {
+    window.showInformationMessage(`run task ${this.label}`);
+  }
+
+  dropTask() {
+    window.showInformationMessage(`remove task ${this.label} from kebab`);
+  }
+
+  openTerminal() {
+    window.showInformationMessage(`open terminal ${this.label}`);
+  }
 }
 
 class TaskItemProvider implements TreeDataProvider<TaskItem> {
