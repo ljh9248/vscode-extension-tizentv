@@ -19,6 +19,30 @@
 			{
 				"command": "vscode-tizen-workspace.helloWorld",
 				"title": "Hello World"
+			},
+			{
+				"command": "taskExplorer.runTask",
+				"title": "Tizen : Run Task",
+				"icon": {
+					"dark": "resources/dark/run.svg",
+					"light": "resources/light/run.svg"
+				}
+			},
+			{
+				"command": "taskExplorer.addTask",
+				"title": "Tizen : Add Task",
+				"icon": {
+					"dark": "resources/dark/add.svg",
+					"light": "resources/light/add.svg"
+				}
+			},
+			{
+				"command": "taskExplorer.editTask",
+				"title": "Tizen : Edit Task",
+				"icon": {
+					"dark": "resources/dark/gear.svg",
+					"light": "resources/light/gear.svg"
+				}
 			}
 		],
 		"viewsContainers": {
@@ -42,6 +66,25 @@
 					"id": "taskTopper",
 					"name": "Task Topper",
 					"contextualTitle": "Task Maker"
+				}
+			]
+		},
+		"menus": {
+			"view/item/context": [
+				{
+					"command": "taskExplorer.runTask",
+					"when": "view == taskExplorer && viewItem == TizenTask",
+					"group": "inline@1"
+				},
+				{
+					"command": "taskExplorer.addTask",
+					"when": "view == taskExplorer && viewItem == TizenTask",
+					"group": "inline@2"
+				},
+				{
+					"command": "taskExplorer.editTask",
+					"when": "view == taskExplorer && viewItem == TizenTask",
+					"group": "inline@3"
 				}
 			]
 		}

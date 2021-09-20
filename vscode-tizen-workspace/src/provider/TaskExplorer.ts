@@ -1,10 +1,12 @@
 import { Event, ProviderResult, TreeDataProvider, TreeItem, TreeItemCollapsibleState } from "vscode";
 
 
-class TaskItem extends TreeItem {
+export class TaskItem extends TreeItem {
   constructor(public readonly label: string, public readonly collapsibleState: TreeItemCollapsibleState) {
     super(label, collapsibleState);
   }
+
+  contextValue = 'TizenTask';
 }
 
 class TaskItemProvider implements TreeDataProvider<TaskItem>{
