@@ -11,7 +11,8 @@
 	],
 	"activationEvents": [
 		"onCommand:vscode-tizen-workspace.helloWorld",
-		"onView:taskExplorer"
+		"onView:taskExplorer",
+		"onView:taskKebabMaker"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -87,7 +88,27 @@
 					"group": "inline@3"
 				}
 			]
-		}
+		},
+		"taskDefinitions": [
+			{
+				"type": "vbs",
+				"properties": {
+					"param1": {
+						"type": "string"
+					},
+					"param2": {
+						"type": "string"
+					},
+					"param3": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"param1",
+					"param2"
+				]
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",

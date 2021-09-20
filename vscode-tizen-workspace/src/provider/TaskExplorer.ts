@@ -2,9 +2,17 @@ import { Event, ProviderResult, TreeDataProvider, TreeItem, TreeItemCollapsibleS
 
 
 export class TaskItem extends TreeItem {
-  constructor(public readonly label: string, public readonly collapsibleState: TreeItemCollapsibleState) {
-    super(label, collapsibleState);
+  constructor(public readonly label: string) {
+    super(label, TreeItemCollapsibleState.None);
+
+    this.params = new TreeItem('params');
+
+    this.output = new TreeItem('output');
   }
+
+  params: TreeItem;
+
+  output: TreeItem;
 
   contextValue = 'TizenTask';
 }
@@ -16,11 +24,11 @@ class TaskItemProvider implements TreeDataProvider<TaskItem>{
   }
   getChildren(element?: TaskItem): ProviderResult<TaskItem[]> {
     return Promise.resolve([
-      new TaskItem('vbs : sso-app', TreeItemCollapsibleState.None),
-      new TaskItem('vbs : sso-service', TreeItemCollapsibleState.None),
-      new TaskItem('ssh : deploy ...', TreeItemCollapsibleState.None),
-      new TaskItem('ssh : rpm install ...', TreeItemCollapsibleState.None),
-      new TaskItem('sh : launch ...', TreeItemCollapsibleState.None),
+      new TaskItem('vbs : sso-app'),
+      new TaskItem('vbs : sso-service'),
+      new TaskItem('ssh : deploy ...'),
+      new TaskItem('ssh : rpm install ...'),
+      new TaskItem('sh : launch ...'),
     ]);
   }
 

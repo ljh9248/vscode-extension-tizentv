@@ -1,4 +1,4 @@
-import { Event, EventEmitter, ProviderResult, TreeDataProvider, TreeItem, TreeItemCollapsibleState } from "vscode";
+import { Event, EventEmitter, ProviderResult, Task, TreeDataProvider, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { TaskItem } from "./TaskExplorer";
 
 class KebabItem extends TreeItem {
@@ -26,7 +26,7 @@ class KebabItem extends TreeItem {
   }
 }
 
-class KebabProvider implements TreeDataProvider<KebabItem | TaskItem> {
+class KebabProvider implements TreeDataProvider<KebabItem | TaskItem | TreeItem> {
   private _onDidChangeTreeData: EventEmitter<void | KebabItem | undefined> = new EventEmitter<KebabItem | undefined | void>();
 
   private kebabs: KebabItem[] = [];
@@ -35,18 +35,22 @@ class KebabProvider implements TreeDataProvider<KebabItem | TaskItem> {
 
   readonly onDidChangeTreeData: Event<KebabItem | undefined | void> = this._onDidChangeTreeData.event;
 
-  getTreeItem(element: KebabItem): TreeItem | Thenable<TreeItem> {
+  getTreeItem(element: KebabItem | TaskItem): TreeItem | Thenable<TreeItem> {
+    if (element instanceof TaskItem) {
+      element.collapsibleState = TreeItemCollapsibleState.Collapsed;
+    }
     return element;
   }
 
-  getChildren(element?: KebabItem | TaskItem): ProviderResult<KebabItem[] | TaskItem[]> {
+  getChildren(element?: KebabItem | TaskItem): ProviderResult<KebabItem[] | TaskItem[] | TreeItem[]> {
     console.log(element);
     if (!element) {
-      // return [];
       return this.kebabs;
     }
-    if (element instanceof KebabItem) {
+    else if (element instanceof KebabItem) {
       return element.tasks;
+    } else if (element instanceof TaskItem) {
+      return [element.params, element.output];
     }
   }
 
