@@ -1,8 +1,17 @@
-import { Event, EventEmitter, ProviderResult, Task, TreeDataProvider, TreeItem, TreeItemCollapsibleState } from "vscode";
-import { TaskItem } from "./TaskExplorer";
+import { join } from "path";
+import {
+  Event,
+  EventEmitter,
+  ExtensionContext,
+  ProviderResult,
+  Task,
+  TreeDataProvider,
+  TreeItem,
+  TreeItemCollapsibleState,
+} from "vscode";
+import { PropertyState, TaskItem } from "./TaskExplorer";
 
 class KebabItem extends TreeItem {
-
   tasks: TaskItem[] = [];
   constructor(public readonly label: string) {
     super(label, TreeItemCollapsibleState.Expanded);
@@ -13,7 +22,7 @@ class KebabItem extends TreeItem {
   }
 
   popTask(task: TaskItem) {
-    const index = this.tasks.findIndex(v => v.id === task.id);
+    const index = this.tasks.findIndex((v) => v.id === task.id);
     this.tasks.splice(index, 1);
   }
 
@@ -21,36 +30,55 @@ class KebabItem extends TreeItem {
     //run task sequentially
   }
 
-  stop() {
-
-  }
+  stop() {}
 }
 
-class KebabProvider implements TreeDataProvider<KebabItem | TaskItem | TreeItem> {
-  private _onDidChangeTreeData: EventEmitter<void | KebabItem | undefined> = new EventEmitter<KebabItem | undefined | void>();
+export class KebabProvider
+  implements TreeDataProvider<KebabItem | TaskItem | TreeItem>
+{
+  constructor(private context: ExtensionContext) {}
+  private _onDidChangeTreeData: EventEmitter<void | KebabItem | undefined> =
+    new EventEmitter<KebabItem | undefined | void>();
 
   private kebabs: KebabItem[] = [];
 
   private current: KebabItem | undefined = undefined;
 
-  readonly onDidChangeTreeData: Event<KebabItem | undefined | void> = this._onDidChangeTreeData.event;
+  readonly onDidChangeTreeData: Event<KebabItem | undefined | void> =
+    this._onDidChangeTreeData.event;
 
   getTreeItem(element: KebabItem | TaskItem): TreeItem | Thenable<TreeItem> {
     if (element instanceof TaskItem) {
       element.collapsibleState = TreeItemCollapsibleState.Collapsed;
     }
+
+    if (
+      element.contextValue === PropertyState.mandatory &&
+      element.description === "none"
+    ) {
+      element.iconPath = {
+        dark: this.context.asAbsolutePath(
+          join("resources", "dark", "warning.svg")
+        ),
+        light: this.context.asAbsolutePath(
+          join("resources", "light", "warning.svg")
+        ),
+      };
+    }
     return element;
   }
 
-  getChildren(element?: KebabItem | TaskItem): ProviderResult<KebabItem[] | TaskItem[] | TreeItem[]> {
+  getChildren(
+    element?: KebabItem | TaskItem
+  ): ProviderResult<KebabItem[] | TaskItem[] | TreeItem[]> {
     console.log(element);
     if (!element) {
       return this.kebabs;
-    }
-    else if (element instanceof KebabItem) {
+    } else if (element instanceof KebabItem) {
       return element.tasks;
     } else if (element instanceof TaskItem) {
-      return [element.params, element.output];
+      element.paramRoot.collapsibleState = TreeItemCollapsibleState.Expanded;
+      return [...element.params, element.outputRoot];
     }
   }
 
@@ -69,5 +97,3 @@ class KebabProvider implements TreeDataProvider<KebabItem | TaskItem | TreeItem>
     return this.current;
   }
 }
-
-export const kebabProvider = new KebabProvider();

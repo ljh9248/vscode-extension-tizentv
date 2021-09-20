@@ -10,17 +10,12 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:vscode-tizen-workspace.helloWorld",
 		"onView:taskExplorer",
 		"onView:taskKebabMaker"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
-			{
-				"command": "vscode-tizen-workspace.helloWorld",
-				"title": "Hello World"
-			},
 			{
 				"command": "taskExplorer.runTask",
 				"title": "Tizen : Run Task",
@@ -43,6 +38,14 @@
 				"icon": {
 					"dark": "resources/dark/gear.svg",
 					"light": "resources/light/gear.svg"
+				}
+			},
+			{
+				"command": "tizenWorkspace.editProperty",
+				"title": "Tizen workspace : Edit properties",
+				"icon": {
+					"dark": "resources/dark/script.svg",
+					"light": "resources/light/script.svg"
 				}
 			}
 		],
@@ -86,6 +89,11 @@
 					"command": "taskExplorer.editTask",
 					"when": "view == taskExplorer && viewItem == TizenTask",
 					"group": "inline@3"
+				},
+				{
+					"command": "tizenWorkspace.editProperty",
+					"when": "view == taskKebabMaker && viewItem =~ /^mandatory$|^optional$/",
+					"group": "inline"
 				}
 			]
 		},
